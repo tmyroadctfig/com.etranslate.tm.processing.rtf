@@ -1002,6 +1002,17 @@ void ansicpg() :
   }
 }
 
+void from_html() :
+{
+  Token val = null;
+}
+{
+  <FROMHTML> (<CW_VAL>)?
+  {
+    _delegate.controlWord("\\fromhtml", VALUE_NOT_SPECIFIED, _where);
+  }
+}
+
 void bin() throws ParseException :
 {
   Token val = null;
@@ -1059,7 +1070,7 @@ void groupContents() throws UnsupportedEncodingException :
       }
     | document_charset()
     | <FROMTEXT>
-    | <FROMHTML> (<CW_VAL>)?
+    | from_html()
     | <FBIDIS>
     | ansicpg()
     | deff()
