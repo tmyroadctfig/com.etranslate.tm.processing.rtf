@@ -899,6 +899,23 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     setDocumentEncoding(getJavaEncoding(cp));
   }
 
+  final public void rtf_start() throws ParseException {
+  Token word = null;
+  Token val = null;
+    word = jj_consume_token(RTF);
+    switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
+    case CW_VAL:
+      val = jj_consume_token(CW_VAL);
+      break;
+    default:
+      jj_la1[15] = jj_gen;
+      ;
+    }
+    int depth = null == val ? 1 : Integer.parseInt(val.image);
+    _rtfDepth = _braceDepth;
+    _delegate.controlWord(word.image, depth, _where);
+  }
+
   final public void from_html() throws ParseException {
   Token val = null;
     jj_consume_token(FROMHTML);
@@ -907,7 +924,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
       jj_consume_token(CW_VAL);
       break;
     default:
-      jj_la1[15] = jj_gen;
+      jj_la1[16] = jj_gen;
       ;
     }
     _delegate.controlWord("\\fromhtml", VALUE_NOT_SPECIFIED, _where);
@@ -1019,15 +1036,12 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         ;
         break;
       default:
-        jj_la1[16] = jj_gen;
+        jj_la1[17] = jj_gen;
         break label_2;
       }
       switch ((jj_ntk==-1)?jj_ntk():jj_ntk) {
       case RTF:
-        word = jj_consume_token(RTF);
-        val = jj_consume_token(CW_VAL);
-        _rtfDepth = _braceDepth;
-        _delegate.controlWord(word.image, Integer.parseInt(val.image), _where);
+        rtf_start();
         break;
       case PC:
       case PCA:
@@ -1124,7 +1138,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         text();
         break;
       default:
-        jj_la1[17] = jj_gen;
+        jj_la1[18] = jj_gen;
         jj_consume_token(-1);
         throw new ParseException();
       }
@@ -1150,7 +1164,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
   public Token token, jj_nt;
   private int jj_ntk;
   private int jj_gen;
-  final private int[] jj_la1 = new int[18];
+  final private int[] jj_la1 = new int[19];
   static private int[] jj_la1_0;
   static private int[] jj_la1_1;
   static private int[] jj_la1_2;
@@ -1160,13 +1174,13 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
       jj_la1_2();
    }
    private static void jj_la1_0() {
-      jj_la1_0 = new int[] {0x800e0e00,0x80ae0e00,0x80ae0e00,0x200000,0xe0000,0xe00,0x0,0x60003000,0x0,0x0,0x0,0x118000,0x0,0x4000,0x0,0x0,0xe0bffe80,0xe0bffe80,};
+      jj_la1_0 = new int[] {0x800e0e00,0x80ae0e00,0x80ae0e00,0x200000,0xe0000,0xe00,0x0,0x60003000,0x0,0x0,0x0,0x118000,0x0,0x4000,0x0,0x0,0x0,0xe0bffe80,0xe0bffe80,};
    }
    private static void jj_la1_1() {
-      jj_la1_1 = new int[] {0xff800000,0xff800000,0xff800000,0x0,0x0,0x0,0xff800000,0x0,0x0,0x0,0x7f8000,0x0,0x0,0x0,0x2e0,0x0,0xffffffff,0xffffffff,};
+      jj_la1_1 = new int[] {0xff800000,0xff800000,0xff800000,0x0,0x0,0x0,0xff800000,0x0,0x0,0x0,0x7f8000,0x0,0x0,0x0,0x2e0,0x0,0x0,0xffffffff,0xffffffff,};
    }
    private static void jj_la1_2() {
-      jj_la1_2 = new int[] {0x3f,0x43f,0x43f,0x400,0x0,0x0,0x3f,0x0,0x200,0x200,0x0,0x0,0x200,0x80,0x0,0x200,0x4ff,0x4ff,};
+      jj_la1_2 = new int[] {0x3f,0x43f,0x43f,0x400,0x0,0x0,0x3f,0x0,0x200,0x200,0x0,0x0,0x200,0x80,0x0,0x200,0x200,0x4ff,0x4ff,};
    }
 
   public RTFParser(java.io.InputStream stream) {
@@ -1178,7 +1192,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.InputStream stream) {
@@ -1190,7 +1204,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   public RTFParser(java.io.Reader stream) {
@@ -1199,7 +1213,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(java.io.Reader stream) {
@@ -1208,7 +1222,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   public RTFParser(RTFParserTokenManager tm) {
@@ -1216,7 +1230,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   public void ReInit(RTFParserTokenManager tm) {
@@ -1224,7 +1238,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     token = new Token();
     jj_ntk = -1;
     jj_gen = 0;
-    for (int i = 0; i < 18; i++) jj_la1[i] = -1;
+    for (int i = 0; i < 19; i++) jj_la1[i] = -1;
   }
 
   final private Token jj_consume_token(int kind) throws ParseException {
@@ -1279,7 +1293,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
     }
-    for (int i = 0; i < 18; i++) {
+    for (int i = 0; i < 19; i++) {
       if (jj_la1[i] == jj_gen) {
         for (int j = 0; j < 32; j++) {
           if ((jj_la1_0[i] & (1<<j)) != 0) {

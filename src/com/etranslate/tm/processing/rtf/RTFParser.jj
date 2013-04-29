@@ -1002,6 +1002,21 @@ void ansicpg() :
   }
 }
 
+void rtf_start() :
+{
+  Token word = null;
+  Token val = null;
+}
+{
+  word = <RTF>
+  (val = <CW_VAL>)?
+  {
+    int depth = null == val ? 1 : Integer.parseInt(val.image);
+    _rtfDepth = _braceDepth;
+    _delegate.controlWord(word.image, depth, _where);
+  }
+}
+
 void from_html() :
 {
   Token val = null;
@@ -1064,10 +1079,7 @@ void groupContents() throws UnsupportedEncodingException :
 }
 {
   (
-      (word = <RTF> val = <CW_VAL>) { 
-      	_rtfDepth = _braceDepth; 
-      	_delegate.controlWord(word.image, Integer.parseInt(val.image), _where);
-      }
+    rtf_start()
     | document_charset()
     | <FROMTEXT>
     | from_html()
