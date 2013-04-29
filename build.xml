@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<project name="RTFParser" default="jar">
+    <target name="javacc" description="Runs JavaCC">
+        <java classname="javacc" fork="true" failonerror="true" logError="true" dir="src/com/etranslate/tm/processing/rtf">
+            <classpath>
+                <pathelement location="javacc.jar"/>
+            </classpath>
+            <arg value="RTFParser.jj"/>
+        </java>
+    </target>
+
+	<target name="compile" depends="javacc">	
+		<mkdir dir="build"/>
+		<mkdir dir="build/classes"/>
+		
+		<javac srcdir="src" destdir="build/classes" />
+	</target>
+	
+	<target name="jar" depends="compile">
+		<jar destfile="build/rtf-parser.jar">
+			<fileset dir="build/classes">
+				<include name="**/*.class"/>
+			</fileset>
+		</jar>
+	</target>
+	
+    <target name="clean" description="Wipes the build directory">
+        <delete dir="build"/>
+    </target>
+</project>
