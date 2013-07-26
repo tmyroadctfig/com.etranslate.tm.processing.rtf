@@ -14,7 +14,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
 
   /* maps windows character sets to java encoding names */
   /* note: sparse array */
-  private static final String[] CHARSET_ENCODING_TABLE = new String[256];
+  private static final String[] CHARSET_ENCODING_TABLE = new String[257];
   static {
         CHARSET_ENCODING_TABLE[0] = "Cp1252";     // ANSI
         CHARSET_ENCODING_TABLE[1] = "Cp1252";     // Default
@@ -40,6 +40,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         CHARSET_ENCODING_TABLE[238] = "Cp1250";   // East European
         CHARSET_ENCODING_TABLE[254] = "Cp437";    // PC 437
         CHARSET_ENCODING_TABLE[255] = "Cp437";    // OEM, still 437
+        CHARSET_ENCODING_TABLE[256] = "Cp1252";    // Custom charset?? Default to the ANSI value
   }
 
   /*
@@ -84,6 +85,14 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         1258, // Vietnamese 
         1361, // Johab
 
+        10000, // Mac Roman
+        10004, // Mac Arabic
+        10005, // Mac Hebrew
+        10006, // Mac Greek
+        10007, // Mac Russian
+        10021, // Mac Thai
+        10081, // Mac Turkish
+
         65001 // UTF-8
   };
 
@@ -120,6 +129,15 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         "Cp1257", // Baltic 
         "Cp1258", // Vietnamese 
         "Johab",  // Johab
+
+        "MacRoman", // Mac Roman
+        "MacArabic", // Mac Arabic
+        "MacHebrew", // Mac Hebrew
+        "MacGreek", // Mac Greek
+        "MacCyrillic", // Mac Russian??
+        "MacThai", // Mac Thai
+        "MacTurkish", // Mac Turkish
+
         "UTF-8"
   };
 
@@ -206,7 +224,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
       document();
     } catch (UnsupportedEncodingException uee) {
       throw new ParseException("Could not decode bytes in encoding: " +
-                               uee.getMessage());
+                               uee.getMessage(), uee);
     }
   }
 
