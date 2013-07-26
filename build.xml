@@ -13,7 +13,7 @@
 		<mkdir dir="build"/>
 		<mkdir dir="build/classes"/>
 		
-		<javac srcdir="src" destdir="build/classes" />
+		<javac srcdir="src" destdir="build/classes" debug="true" />
 	</target>
 	
 	<target name="jar" depends="compile">
