@@ -501,7 +501,7 @@ TOKEN:
 // N.B. This input - "\control1    \control2" - is different. The first
 // intervening space is ignorable.  The subsequent spaces, however, are
 // text and must be accumulated in a TEXT token in the DEFAULT state.
-<CONTROL>
+<CONTROL, CONTROL_VALUE>
 SKIP:
 {
   " " : DEFAULT
@@ -515,7 +515,7 @@ SKIP:
 <CONTROL>
 TOKEN:
 {
-  <PAR: "par"> 
+  <PAR: "par">
 | <LINE: "line">
 }
 
@@ -523,23 +523,23 @@ TOKEN:
 <CONTROL>
 TOKEN:
 {
-  <U: "u">
+  <U: "u"> : CONTROL_VALUE
 }
 
 /* Unicode skipping directive control word literal */
 <CONTROL>
 TOKEN:
 {
- <UC: "uc">
+ <UC: "uc"> : CONTROL_VALUE
 }
 
 /* style, font, and font charset control word literals */
 <CONTROL>
 TOKEN:
 {
-  <F: "f">
-| <CS: "cs">
-| <FCHARSET: "fcharset">
+  <F: "f"> : CONTROL_VALUE
+| <CS: "cs"> : CONTROL_VALUE
+| <FCHARSET: "fcharset"> : CONTROL_VALUE
 | <PLAIN: "plain">
 }
 
@@ -550,12 +550,12 @@ TOKEN:
   <PC: "pc">
 | <PCA: "pca">
 | <MAC: "mac">
-| <RTF: "rtf">
+| <RTF: "rtf"> : CONTROL_VALUE
 | <ANSI: "ansi">
-| <ANSICPG: "ansicpg">
-| <DEFF: "deff">
+| <ANSICPG: "ansicpg"> : CONTROL_VALUE
+| <DEFF: "deff"> : CONTROL_VALUE
 | <FROMTEXT: "fromtext">
-| <FROMHTML: "fromhtml">
+| <FROMHTML: "fromhtml"> : CONTROL_VALUE
 | <FBIDIS: "fbidis">
 }
 
@@ -565,10 +565,10 @@ TOKEN:
 {
   <INFO: "info">
 | <REVTBL: "revtbl">
-| <PNTEXT: "pntext">
+| <PNTEXT: "pntext"> : CONTROL_VALUE
 | <FONTTBL: "fonttbl">
 | <COLORTBL: "colortbl">
-| <PNSECLVL: "pnseclvl">
+| <PNSECLVL: "pnseclvl"> : CONTROL_VALUE
 | <LISTTABLE: "listtable">
 | <STYLESHEET: "stylesheet">
 }
@@ -598,7 +598,7 @@ TOKEN:
 <CONTROL>
 TOKEN:
 {
-  <BIN: "bin">
+  <BIN: "bin"> : CONTROL_VALUE
 }
 
 /* control words which we don't handle (but which we forward to the
@@ -607,11 +607,11 @@ TOKEN:
 <CONTROL>
 TOKEN:
 {
-  <CONTROL_WORD: (["a"-"z", "A"-"Z"])+>
+  <CONTROL_WORD: (["a"-"z", "A"-"Z"])+> : CONTROL_VALUE
 }
 
 /* control parameters: note that they may be negative values */
-<CONTROL>
+<CONTROL_VALUE>
 TOKEN:
 {
   <#DIGIT: ["0"-"9"]>
@@ -623,7 +623,7 @@ TOKEN:
  * but is not actually part of the control.  However the data needs to be
  * processed as raw text.
  */
-<CONTROL>
+<CONTROL, CONTROL_VALUE>
 TOKEN:
 {
  <TEXT_CONTROL_DELIMITER: ~[]> : DEFAULT

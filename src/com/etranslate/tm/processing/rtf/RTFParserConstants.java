@@ -70,9 +70,10 @@ public interface RTFParserConstants {
   int CW_VAL = 73;
   int TEXT_CONTROL_DELIMITER = 74;
 
-  int CONTROL = 0;
-  int HEX = 1;
-  int DEFAULT = 2;
+  int CONTROL_VALUE = 0;
+  int CONTROL = 1;
+  int HEX = 2;
+  int DEFAULT = 3;
 
   String[] tokenImage = {
     "<EOF>",
