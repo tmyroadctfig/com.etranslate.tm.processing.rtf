@@ -93,6 +93,8 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         10021, // Mac Thai
         10081, // Mac Turkish
 
+        20127, // US-ASCII (7-bit only, i.e. no values above 127)
+
         65001 // UTF-8
   };
 
@@ -137,6 +139,8 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         "MacCyrillic", // Mac Russian??
         "MacThai", // Mac Thai
         "MacTurkish", // Mac Turkish
+
+        "US-ASCII", // US-ASCII (7-bit only, i.e. no values above 127)
 
         "UTF-8"
   };
@@ -283,7 +287,13 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
 
   protected String getEncodingForCharsetAndFontName(int charset, String fontName) {
     if (charset >= CHARSET_ENCODING_TABLE.length) {
-        return "Cp" + charset;
+        String encoding = getJavaEncoding(charset);
+        if (encoding == null) {
+            return "Cp" + charset;
+        }
+        else {
+            return encoding;
+        }
     }
     else {
             return CHARSET_ENCODING_TABLE[charset];
