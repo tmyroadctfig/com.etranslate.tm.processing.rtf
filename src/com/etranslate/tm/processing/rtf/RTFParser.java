@@ -680,10 +680,13 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     setCurrentEncoding((String)_fontEncodingStack.pop());
     setCurrentStyle((String)_styleStack.pop());
     _delegate.closeGroup(_braceDepth);
+
     if (_rtfDepth == --_braceDepth) { // leaving a table
       if (_where == IN_STYLESHEET) {
         _delegate.styleList(new ArrayList(_styleMap.values()));
       }
+      _where = IN_DOCUMENT;
+    } else if (_where == IN_PNTEXT) {
       _where = IN_DOCUMENT;
     }
   }
