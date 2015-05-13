@@ -95,6 +95,8 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
 
         20127, // US-ASCII (7-bit only, i.e. no values above 127)
 
+        28591, // ISO 8859-1
+
         65001 // UTF-8
   };
 
@@ -141,6 +143,8 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         "MacTurkish", // Mac Turkish
 
         "US-ASCII", // US-ASCII (7-bit only, i.e. no values above 127)
+
+        "ISO-8859-1",
 
         "UTF-8"
   };
@@ -927,7 +931,12 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
     val = jj_consume_token(CW_VAL);
     // must be a value in the map - we should throw if it isn't there.
     int cp = null == val ? 0 : Integer.parseInt(val.image);
-    setDocumentEncoding(getJavaEncoding(cp));
+    String encoding = getJavaEncoding(cp);
+    if (encoding == null)
+    {
+      {if (true) throw new IllegalStateException("Failed to find a registered encoding for code page: " + cp);}
+    }
+    setDocumentEncoding(encoding);
   }
 
   final public void rtf_start() throws ParseException {
