@@ -50,7 +50,9 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
    */
 
   private static final int[] RTF_CODEPAGE = {
-        437, // United States IBM 
+        0,   // The default code page
+
+        437, // United States IBM
 
         /*  Not supported by JDK 1.3.1
         708, // Arabic (ASMO 708) 
@@ -101,6 +103,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
   };
 
   private static final String[] JAVA_ENCODINGS = {
+        "Cp1252",// Default
         "Cp437", // United States IBM 
         /*  Not supported by JDK 1.3.1
         "Cp708", // Arabic (ASMO 708) 
