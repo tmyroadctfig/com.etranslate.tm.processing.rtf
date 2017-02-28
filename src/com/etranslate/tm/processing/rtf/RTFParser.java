@@ -88,6 +88,9 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         1361, // Johab
 
         10000, // Mac Roman
+        10001, // Mac Japanese
+        //10002, // Mac Traditional Chinese (x-mac-chinesetrad)
+        //10003, // Mac Korean (x-mac-korean)
         10004, // Mac Arabic
         10005, // Mac Hebrew
         10006, // Mac Greek
@@ -138,6 +141,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
         "Johab",  // Johab
 
         "MacRoman", // Mac Roman
+        "Shift_JIS", // Best attempt for Mac Japanese (x-mac-japanese)
         "MacArabic", // Mac Arabic
         "MacHebrew", // Mac Hebrew
         "MacGreek", // Mac Greek
