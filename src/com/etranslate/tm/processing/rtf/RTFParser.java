@@ -174,7 +174,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
   // the current number of bytes to skip after a unicode character
   private Integer _currentSkipState = DEFAULT_SKIP_STATE;
   // a stack of skip states for bytes following a unicode character
-  private final Stack _ucSkipStates = new Stack();
+  private final Stack<Integer> _ucSkipStates = new Stack<>();
 
   // the default encoding for all RTF documents
   private static final String DEFAULT_ENCODING = "Cp1252";
@@ -194,17 +194,17 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
   private int _currentCharsetValue = 0;
   // this maps font codes (\fN) to the encodings assigned (\fcharsetN)
   // in the fonttbl
-  private final Map _fontEncodingMap = new HashMap();
+  private final Map<Integer, String> _fontEncodingMap = new HashMap<>();
 
   /** support for encoding changes via references to the font table */
   // the current text encoding
   private String _currentEncoding = DEFAULT_ENCODING;
   // a stack of text encodings across groups
-  private final Stack _fontEncodingStack = new Stack();
+  private final Stack<String> _fontEncodingStack = new Stack<>();
 
   private int _currentStyleValue = 0;
-  private final Map _styleMap = new HashMap();
-  private final Stack _styleStack = new Stack();
+  private final Map<Integer, String> _styleMap = new HashMap<>();
+  private final Stack<String> _styleStack = new Stack<>();
   private String _currentStyle = NO_STYLE;
 
   private int _where = IN_DOCUMENT;
@@ -694,7 +694,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
 
     if (_rtfDepth == --_braceDepth) { // leaving a table
       if (_where == IN_STYLESHEET) {
-        _delegate.styleList(new ArrayList(_styleMap.values()));
+        _delegate.styleList(new ArrayList<>(_styleMap.values()));
       }
       _where = IN_DOCUMENT;
     } else if (_where == IN_PNTEXT) {
@@ -1326,7 +1326,7 @@ public class RTFParser implements RTFParserDelegate, RTFParserConstants {
       return (jj_ntk = jj_nt.kind);
   }
 
-  private java.util.Vector jj_expentries = new java.util.Vector();
+  private java.util.Vector<int[]> jj_expentries = new java.util.Vector<>();
   private int[] jj_expentry;
   private int jj_kind = -1;
 
