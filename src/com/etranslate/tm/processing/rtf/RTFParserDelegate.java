@@ -120,7 +120,7 @@ public interface RTFParserDelegate {
      * @param styles a <code>List</code> of <code>String</code> objects.
      * @throws ParseException is thrown when parse errors are encountered.
      */
-    public void styleList(List styles) throws ParseException;
+    public void styleList(List<String> styles) throws ParseException;
     
     /**
      * The document parsing has begun.

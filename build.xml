@@ -13,7 +13,9 @@
 		<mkdir dir="build"/>
 		<mkdir dir="build/classes"/>
 		
-		<javac srcdir="src" destdir="build/classes" debug="true" />
+		<javac srcdir="src" destdir="build/classes" debug="true">
+			<compilerarg value="-Xlint:unchecked"/>
+		</javac>
 	</target>
 	
 	<target name="jar" depends="compile">
