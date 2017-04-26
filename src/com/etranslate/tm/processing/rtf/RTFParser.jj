@@ -203,7 +203,7 @@ public class RTFParser implements RTFParserDelegate {
   // the current number of bytes to skip after a unicode character
   private Integer _currentSkipState = DEFAULT_SKIP_STATE;
   // a stack of skip states for bytes following a unicode character
-  private final Stack _ucSkipStates = new Stack();
+  private final Stack<Integer> _ucSkipStates = new Stack<Integer>();
 
   // the default encoding for all RTF documents
   private static final String DEFAULT_ENCODING = "Cp1252";
@@ -223,17 +223,17 @@ public class RTFParser implements RTFParserDelegate {
   private int _currentCharsetValue = 0;
   // this maps font codes (\fN) to the encodings assigned (\fcharsetN)
   // in the fonttbl
-  private final Map _fontEncodingMap = new HashMap();
+  private final Map<Integer, String> _fontEncodingMap = new HashMap<Integer, String>();
 
   /** support for encoding changes via references to the font table */
   // the current text encoding
   private String _currentEncoding = DEFAULT_ENCODING;
   // a stack of text encodings across groups
-  private final Stack _fontEncodingStack = new Stack();
+  private final Stack<String> _fontEncodingStack = new Stack<String>();
 
   private int _currentStyleValue = 0;
-  private final Map _styleMap = new HashMap();
-  private final Stack _styleStack = new Stack();
+  private final Map<Integer, String> _styleMap = new HashMap<Integer, String>();
+  private final Stack<String> _styleStack = new Stack<String>();
   private String _currentStyle = NO_STYLE;
 
   private int _where = IN_DOCUMENT;
@@ -768,7 +768,7 @@ void special_character(StringBuilder buf) :
 }
 {
   (
-      <TAB>        { buf.append('\t'); }
+      <TAB>        { buf.append('\u0009'); }
     | <EMDASH>     { buf.append('\u2014'); }
     | <ENDASH>     { buf.append('\u2013'); }
     | <EMSPACE>    { buf.append('\u2003'); }
@@ -827,7 +827,7 @@ void rbrace() :
 
     if (_rtfDepth == --_braceDepth) { // leaving a table
       if (_where == IN_STYLESHEET) {
-        _delegate.styleList(new ArrayList(_styleMap.values()));
+        _delegate.styleList(new ArrayList<String>(_styleMap.values()));
       }
       _where = IN_DOCUMENT;
     } else if (_where == IN_PNTEXT) {
