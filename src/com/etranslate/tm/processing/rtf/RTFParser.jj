@@ -326,7 +326,11 @@ public class RTFParser implements RTFParserDelegate {
 
 
   protected String getEncodingForCharsetAndFontName(int charset, String fontName) {
-    if (charset >= CHARSET_ENCODING_TABLE.length) {
+    if (charset < 0) {
+        // Bogus encoding passed in - default to windows-1252.
+        return "Cp1252";
+    }
+    else if (charset >= CHARSET_ENCODING_TABLE.length) {
         String encoding = getJavaEncoding(charset);
         if (encoding == null) {
             return "Cp" + charset;
